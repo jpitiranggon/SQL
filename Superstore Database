@@ -45,3 +45,12 @@ WHERE category = "Kitchen Supplies";
 SELECT item_name, category, average_rating
 FROM superstore
 ORDER BY category, average_rating DESC;
+
+#Order the items in Electronics by highest rating to lowest rating.
+SELECT 'Electronics', item_name, average_rating
+FROM superstore
+ORDER BY average_rating DESC;
+
+#Find the quantity currently in stock of the highest rated item from the Electronics category.
+SELECT COUNT(stock_quantity), 'Premium Coffee Maker'
+FROM superstore;
