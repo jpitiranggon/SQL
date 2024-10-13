@@ -27,30 +27,30 @@ VALUES
     (14, 'Cutlery Set', 'Kitchen Supplies', 34.50, 40, 4.4),
     (15, 'Cozy Throw Blanket', 'Furnishings', 24.99, 100, 4.2);
 
-#Order the items by price.
+--Order the items by price.
 SELECT item_name, price
 FROM superstore;
 
-#Show a statistic about the item prices.
+--Show a statistic about the item prices.
 SELECT SUM(price), category
 FROM superstore
 GROUP BY category;
 
-#Show a statistic about the price for items in the category of "Kitchen Supplies."
+--Show a statistic about the price for items in the category of "Kitchen Supplies."
 SELECT AVG(price), category
 FROM superstore
 WHERE category = "Kitchen Supplies";
 
-#Sort and order the items by highest rating within each category.
+--Sort and order the items by highest rating within each category.
 SELECT item_name, category, average_rating
 FROM superstore
 ORDER BY category, average_rating DESC;
 
-#Order the items in Electronics by highest rating to lowest rating.
+--Order the items in Electronics by highest rating to lowest rating.
 SELECT 'Electronics', item_name, average_rating
 FROM superstore
 ORDER BY average_rating DESC;
 
-#Find the quantity currently in stock of the highest rated item from the Electronics category.
+--Find the quantity currently in stock of the highest rated item from the Electronics category.
 SELECT COUNT(stock_quantity), 'Premium Coffee Maker'
 FROM superstore;
