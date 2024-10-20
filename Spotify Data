@@ -1,0 +1,53 @@
+--The following analysis was completed on information from a Spotify dataset.
+
+--What are the top 10 most popular songs according to the data?
+
+SELECT track_name
+, artist_name
+FROM BIT_DB.Spotifydata
+ORDER BY popularity desc
+LIMIT 10;
+
+--Who are top 10 most popular artists according to the data?
+
+SELECT artist_name
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY AVG(popularity) desc
+LIMIT 10;
+
+--What is the average damceability, energy, and tempo of each artist?
+
+SELECT artist_name
+, ROUND (AVG(danceability),3) AS avg_danceability
+, ROUND (AVG(energy),3) AS avg_energy
+, ROUND (AVG(tempo),3) AS avg_tempo
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name;
+
+--What is the average length of each artist's songs?
+
+SELECT artist_name
+, ROUND (AVG(duration_ms)) as avg_duration_ms
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name;
+
+--What is the average danceability and duration of the top 10 most popular songs?
+
+SELECT artist_name
+, track_name
+, danceability
+, duration_ms
+FROM BIT_DB.Spotifydata
+ORDER BY popularity desc
+LIMIT 10;
+
+--What are the average tempos and durations for the top 10 most popular artists?
+
+SELECT artist_name
+, ROUND (AVG(tempo)) as avg_tempo
+, ROUND (AVG(duration_ms)) as avg_duration_ms
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY AVG(popularity) desc
+LIMIT 10;
