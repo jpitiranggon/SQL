@@ -1,0 +1,176 @@
+--For this project, I used a dataset about a Digital Media Store containing various tables.
+
+--I completed the following analysis on the Chinook Digital Media Store database:
+
+--What city was the most amount of money spent from and how much was spent?
+
+SELECT billingcity, ROUND(SUM(total),2) AS total_spent
+FROM chinook.invoices
+GROUP BY billingcity
+ORDER BY total_spent DESC
+LIMIT 1;
+
+--What track was purchased the most?
+
+SELECT tracks.name
+, SUM(inv_items.quantity) AS total_purchased
+FROM tracks
+LEFT JOIN invoice_items AS inv_items
+ON tracks.trackid = inv_items.trackid
+GROUP BY tracks.name
+HAVING total_purchased >=1
+ORDER BY total_purchased desc
+LIMIT 1;
+
+
+--What music genres were purchased in 2013?
+
+SELECT DISTINCT genres.name AS genre_purchased_2013
+FROM invoices
+JOIN invoice_items AS inv_items
+ON invoices.invoiceid = inv_items.invoiceid
+JOIN tracks
+ON inv_items.trackid = tracks.trackid
+JOIN genres
+ON tracks.genreid = genres.genreid
+WHERE invoices.invoicedate >= '2013-01-01' AND invoices.invoicedate < '2014-01-01';
+
+--Show customers who are not in the US. Include their full names, customer ID, and country.
+
+SELECT firstname
+, lastname
+, customerid
+, country
+FROM customers
+WHERE country <> 'USA';
+
+--Show customers from Brazil.
+
+SELECT *
+FROM customers
+WHERE country = 'Brazil';
+
+--Find the invoices of customers who are from Brazil. Include the customer's full name, Invoice ID, Date of the invoice, and billing country.
+
+SELECT cust.firstname
+, cust.lastname
+, inv.invoiceid
+, inv.invoicedate
+, inv.billingcountry
+FROM customers AS cust
+LEFT JOIN invoices AS inv
+ON cust.customerid = inv.customerid
+WHERE inv.billingcountry = 'Brazil';
+
+--Show the Employees who are Sales Agents.
+
+SELECT lastname
+, firstname
+, title
+FROM employees
+WHERE title LIKE '%Agent%';
+
+--Find a unique/distinct list of billing countries from the Invoice table.
+
+SELECT DISTINCT billingcountry
+FROM invoices;
+
+--Provide a query that shows the invoices associated with each sales agent. The resulting table should include the Sales Agent's full name.
+
+SELECT invoices.InvoiceId
+, employees.FirstName
+, employees.lastname
+FROM invoices
+JOIN customers
+ON invoices.customerid = customers.customerid
+JOIN employees
+ON customers.supportrepid = employees.employeeid
+;
+
+
+--Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
+
+SELECT invoices.total
+, customers.FirstName || ' ' || customers.LastName AS customer
+, customers.Country
+, employees.FirstName || ' ' || employees.lastname AS sales_agent
+FROM invoices
+LEFT JOIN customers
+ON invoices.customerid = customers.CustomerId
+LEFT JOIN employees
+ON customers.supportrepid = employees.EmployeeId;
+
+--How many Invoices were there in 2009?
+
+SELECT COUNT(invoiceid) AS total_invoices
+FROM invoices
+WHERE invoicedate >= '2009-01-01' AND invoicedate < '2010-01-01';
+
+--What are the total sales for 2009?
+
+SELECT ROUND(SUM(total),2) AS total_sales
+FROM invoices
+WHERE invoicedate >= '2009-01-01' AND invoicedate < '2010-01-01';
+
+--Write a query that includes the purchased track name with each invoice line ID.
+
+SELECT tracks.name
+, inv_items.invoicelineid
+FROM tracks
+JOIN invoice_items AS inv_items
+ON tracks.trackid = inv_items.trackid
+ORDER BY invoicelineid;
+
+--Write a query that includes the purchased track name AND artist name with each invoice line ID.
+
+SELECT artists.Name AS artist
+, tracks.name AS track_name
+, inv_items.invoicelineid
+FROM artists
+JOIN albums
+ON artists.artistid = albums.ArtistId
+JOIN tracks
+ON albums.albumid = tracks.albumid
+JOIN invoice_items AS inv_items
+ON tracks.trackid = inv_items.trackid
+ORDER BY invoicelineid;
+
+--Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
+
+SELECT tracks.name AS song_title
+, albums.Title AS album_title
+, media_types.Name AS media_type
+, genres.name AS genre
+FROM tracks
+JOIN albums
+ON tracks.albumid = albums.AlbumId
+JOIN media_types
+ON tracks.mediatypeid = media_types.MediaTypeId
+JOIN genres
+ON tracks.genreid = genres.genreid;
+
+--Show the total sales made by each sales agent.
+
+SELECT employees.firstname || ' ' || employees.lastname AS sales_agent
+, ROUND(SUM(total),2) AS total_sales
+FROM employees
+JOIN customers
+ON employees.employeeid = customers.supportrepid
+JOIN invoices
+ON customers.customerid = invoices.CustomerId
+GROUP BY sales_agent;
+
+--Which sales agent made the most dollars in sales in 2009?
+
+SELECT employees.firstname || ' ' || employees.lastname AS sales_agent
+, ROUND(SUM(total),2) AS total_sales
+FROM employees
+JOIN customers
+ON employees.employeeid = customers.supportrepid
+JOIN invoices
+ON customers.customerid = invoices.CustomerId
+WHERE invoices.invoicedate >= '2009-01-01' AND invoices.InvoiceDate<'2010-01-01'
+GROUP BY sales_agent 
+ORDER BY total_sales desc
+LIMIT 1
+;
