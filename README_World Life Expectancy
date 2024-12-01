@@ -1,11 +1,11 @@
-> In this project, I utilized SQL to clean, prepare, and analyze a World Life Expectancy dataset.
+In this project, I utilized SQL to clean, prepare, and analyze a World Life Expectancy dataset.
 
-## Questions I was interested in answering:
+Questions I was interested in answering:
 1. What was the lowest and highest life expectancy for each country in the last 15 years?
 2. Is there a correlation between GDP and life expectancy?
 3. Is there a correlation between BMI and life expectancy?
 
-## My analysis consisted of:
+My analysis consisted of:
 1. Identifying and removing duplicate records.
 2. Filling missing fields with appropriate data where possible.
 3. Running queries to answer questions and identify information.
