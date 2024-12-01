@@ -1,1 +1,20 @@
+In this project, I utilized SQL to clean, prepare, and analyze a World Life Expectancy dataset. I uploaded the prepped dataset into Tableau to create an interactive dashboard showcasing some of my findings.
 
+Questions I was interested in answering:
+1. What was the lowest and highest life expectancy for each country in the last 15 years?
+2. Is there a correlation between GDP and life expectancy?
+3. Is there a correlation between BMI and life expectancy?
+
+My analysis consisted of:
+1. Identifying and removing duplicate records.
+2. Filling missing fields with appropriate data where possible.
+3. Running queries to answer questions and identify information.
+4. Utilizing case statements to categorize data.
+
+Key Takeaways:
+- There is a high correlation between GDP and life expectancy.
+- Countries with a high GDP consistently had a significantly higher life expectancy than those with a lower GDP.
+- Shockingly, there was a low correlation between BMI and life expectancy. Countries with higher life expectancies consistently had much higher BMIs in the obese range according to the CDC.
+- Life expectancies increased for all countries over the span of the last 15 years. This is likely due to the advancement of modern medicine and a growing GDP.
+
+Thank you for taking the time to visit my portfolio!
